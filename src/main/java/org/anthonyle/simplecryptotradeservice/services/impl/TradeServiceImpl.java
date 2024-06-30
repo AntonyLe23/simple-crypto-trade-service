@@ -1,7 +1,6 @@
 package org.anthonyle.simplecryptotradeservice.services.impl;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
