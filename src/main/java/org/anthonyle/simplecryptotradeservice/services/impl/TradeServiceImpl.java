@@ -1,8 +1,11 @@
 package org.anthonyle.simplecryptotradeservice.services.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.anthonyle.simplecryptotradeservice.dto.TradeRequest;
 import org.anthonyle.simplecryptotradeservice.dto.TradeResult;
@@ -26,7 +29,6 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class TradeServiceImpl implements TradeService {
 
   private final UserRepo userRepo;
@@ -65,13 +67,23 @@ public class TradeServiceImpl implements TradeService {
 
     // Last check
     if (Objects.isNull(cryptoWallet)
-    || cryptoWallet.getUsdtBalance().compareTo(BigDecimal.ZERO) < 0
-    || cryptoWallet.getBtcUnit().compareTo(BigDecimal.ZERO) < 0
-    || cryptoWallet.getEthUnit().compareTo(BigDecimal.ZERO) < 0) {
+        || cryptoWallet.getUsdtBalance().compareTo(BigDecimal.ZERO) < 0
+        || cryptoWallet.getBtcUnit().compareTo(BigDecimal.ZERO) < 0
+        || cryptoWallet.getEthUnit().compareTo(BigDecimal.ZERO) < 0) {
       throw new TradeException("Something went wrong", ErrorCode.INTERNAL_TRANSACTION_ERROR);
     }
 
     return this.generateTradeResult(detail);
+  }
+
+  @Override
+  public List<TradeResult> getTradesByUser(Long userId) {
+    Optional<User> userOpt = userRepo.findById(userId);
+    User user = userOpt.orElseThrow(() -> new TradeException("User not found", ErrorCode.USER_NOT_FOUND));
+
+    return transactionDetailRepo.findByUser(user).stream()
+        .map(this::generateTradeResult)
+        .collect(Collectors.toList());
   }
 
   private BigDecimal getPricePerUnit(TradeType tradeType, AggregatedPrice bestPrice) {
@@ -180,11 +192,14 @@ public class TradeServiceImpl implements TradeService {
 
   private TradeResult generateTradeResult(TransactionDetail transactionDetail) {
     TradeResult tradeResult = new TradeResult();
+    tradeResult.setCryptoWalletId(transactionDetail.getCryptoWallet().getId());
     tradeResult.setTradeType(transactionDetail.getTradeType());
     tradeResult.setCryptoPair(transactionDetail.getCryptoPair());
     tradeResult.setUnit(transactionDetail.getQuantity());
     tradeResult.setPricePerUnit(transactionDetail.getPricePerUnit());
     tradeResult.setTotalExecutedAmount(transactionDetail.getTotalTransactionAmount());
+    tradeResult.setCreatedTime(transactionDetail.getCreatedDateTime());
     return tradeResult;
   }
+
 }
