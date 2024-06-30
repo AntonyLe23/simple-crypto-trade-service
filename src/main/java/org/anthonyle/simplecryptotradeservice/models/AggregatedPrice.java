@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter
 public class AggregatedPrice extends BaseEntity {
 
-  @Column(name = "crypto_pair", unique = true, nullable = false)
+  @Column(name = "crypto_pair", nullable = false)
   @Enumerated(EnumType.STRING)
   private CryptoPair cryptoPair;
 
@@ -29,6 +29,6 @@ public class AggregatedPrice extends BaseEntity {
   @Column(name = "ask_price")
   private BigDecimal askPrice;
 
-  @Column(name = "updated_time")
-  private LocalDateTime updatedTime;
+  @Column(name = "created_time")
+  private LocalDateTime createdDateTime;
 }

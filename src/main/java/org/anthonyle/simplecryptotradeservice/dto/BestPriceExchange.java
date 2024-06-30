@@ -5,12 +5,16 @@ import java.math.BigDecimal;
 
 import org.anthonyle.simplecryptotradeservice.enums.CryptoPair;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 import lombok.Data;
 
 @Data
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class BestPriceExchange implements Serializable {
 
-  private CryptoPair cryptoPair;
+  private String cryptoPair;
   private BigDecimal bidPrice;
   private BigDecimal askPrice;
 }

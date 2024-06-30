@@ -98,7 +98,7 @@ public class PriceAggregationTaskTest {
     ArgumentCaptor<BigDecimal> bestAskPrices = ArgumentCaptor.forClass(BigDecimal.class);
     ArgumentCaptor<CryptoPair> cryptoPair = ArgumentCaptor.forClass(CryptoPair.class);
 
-    verify(aggregatedPriceService, times(2)).saveOrUpdateAggregatedPriceByCryptoPair(bestBidPrices.capture(), bestAskPrices.capture(),
+    verify(aggregatedPriceService, times(2)).createNewAggregatedPrice(bestBidPrices.capture(), bestAskPrices.capture(),
         cryptoPair.capture());
 
     Assertions.assertThat(bestBidPrices.getAllValues()).hasSize(2);
