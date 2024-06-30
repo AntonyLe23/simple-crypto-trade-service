@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.anthonyle.simplecryptotradeservice.dto.CryptoWalletResponse;
 import org.anthonyle.simplecryptotradeservice.exceptions.BaseException;
 import org.anthonyle.simplecryptotradeservice.exceptions.ErrorCode;
-import org.anthonyle.simplecryptotradeservice.models.CryptoWallet;
 import org.anthonyle.simplecryptotradeservice.models.User;
 import org.anthonyle.simplecryptotradeservice.repositories.CryptoWalletRepo;
 import org.anthonyle.simplecryptotradeservice.repositories.UserRepo;
