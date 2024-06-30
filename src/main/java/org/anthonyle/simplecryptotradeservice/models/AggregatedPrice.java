@@ -14,7 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "aggregated_price")
+@Table(name = "aggregated_prices")
 @Getter
 @Setter
 public class AggregatedPrice extends BaseEntity {

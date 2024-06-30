@@ -20,7 +20,7 @@ public class AggregatedPriceController {
   @GetMapping("/crypto-pairs/best-prices")
   public ApiResponse<List<BestPriceExchange>> getBestPrice() {
     ApiResponse<List<BestPriceExchange>> apiResponse = new ApiResponse<>();
-    apiResponse.setData(aggregatedPriceService.getLatestBestAggregatedPricesByCryptoPairs());
+    apiResponse.setData(aggregatedPriceService.getAllLatestBestAggregatedPricesByCryptoPairs());
     return apiResponse;
   }
 }
