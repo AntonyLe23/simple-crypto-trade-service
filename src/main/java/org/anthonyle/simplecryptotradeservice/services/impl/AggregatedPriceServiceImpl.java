@@ -2,7 +2,10 @@ package org.anthonyle.simplecryptotradeservice.services.impl;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import org.anthonyle.simplecryptotradeservice.dto.BestPriceExchange;
 import org.anthonyle.simplecryptotradeservice.enums.CryptoPair;
 import org.anthonyle.simplecryptotradeservice.models.AggregatedPrice;
 import org.anthonyle.simplecryptotradeservice.repositories.AggregatedPriceRepo;
@@ -31,4 +34,16 @@ public class AggregatedPriceServiceImpl implements AggregatedPriceService {
     aggregatedPriceRepo.save(newAggregatedPrice);
   }
 
+  @Override
+  public List<BestPriceExchange> getLatestBestAggregatedPricesByCryptoPairs() {
+    return aggregatedPriceRepo.findAllLatestAggregatedPriceByCryptoPairs().stream()
+        .map(aggregatedPrice -> {
+          BestPriceExchange bestPriceExchange = new BestPriceExchange();
+          bestPriceExchange.setBidPrice(aggregatedPrice.getBidPrice());
+          bestPriceExchange.setAskPrice(aggregatedPrice.getAskPrice());
+          bestPriceExchange.setCryptoPair(aggregatedPrice.getCryptoPair().name());
+          return bestPriceExchange;
+        })
+        .collect(Collectors.toList());
+  }
 }
