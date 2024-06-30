@@ -3,8 +3,6 @@ package org.anthonyle.simplecryptotradeservice.controllers;
 import org.anthonyle.simplecryptotradeservice.dto.ApiResponse;
 import org.anthonyle.simplecryptotradeservice.dto.TradeRequest;
 import org.anthonyle.simplecryptotradeservice.dto.TradeResult;
-import org.anthonyle.simplecryptotradeservice.exceptions.InsufficientBalanceException;
-import org.anthonyle.simplecryptotradeservice.exceptions.TradeException;
 import org.anthonyle.simplecryptotradeservice.services.TradeService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

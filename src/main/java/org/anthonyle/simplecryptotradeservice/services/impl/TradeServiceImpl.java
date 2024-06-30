@@ -128,6 +128,12 @@ public class TradeServiceImpl implements TradeService {
 
   private TransactionDetail sellTransactionProcess(TradeRequest tradeRequest, CryptoWallet cryptoWallet, AggregatedPrice bestPrice) {
     BigDecimal pricePerUnit = getPricePerUnit(tradeRequest.getTradeType(), bestPrice);
+    if (Objects.isNull(pricePerUnit)) {
+      throw new TradeException(
+          String.format("Cannot find latest aggregated price for %s", tradeRequest.getCryptoPair().name()),
+          ErrorCode.AGGREGATE_PRICE_NOT_FOUND
+      );
+    }
 
     TransactionDetail detail = new TransactionDetail();
     detail.setUser(cryptoWallet.getUser());
