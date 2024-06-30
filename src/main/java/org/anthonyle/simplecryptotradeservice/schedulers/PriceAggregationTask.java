@@ -67,8 +67,8 @@ public class PriceAggregationTask {
       ethAskPrice = getHuobiPrice(huobiResponse.getData(), HuobiCryptoPair.ETHUSDT, ethAskPrice, false);
     }
 
-    this.saveOrUpdateAggregatedPrices(btcBidPrice, btcAskPrice, CryptoPair.BTCUSDT);
-    this.saveOrUpdateAggregatedPrices(ethBidPrice, ethAskPrice, CryptoPair.ETHUSDT);
+    this.createNewAggregatedPrice(btcBidPrice, btcAskPrice, CryptoPair.BTCUSDT);
+    this.createNewAggregatedPrice(ethBidPrice, ethAskPrice, CryptoPair.ETHUSDT);
   }
 
   private BinancePrice[] fetchBinancePrices() {
@@ -106,7 +106,7 @@ public class PriceAggregationTask {
         .findFirst().orElse(existingPrice);
   }
 
-  private void saveOrUpdateAggregatedPrices(BigDecimal bidPrice, BigDecimal askPrice, CryptoPair cryptoPair) {
-    aggregatedPriceService.saveOrUpdateAggregatedPriceByCryptoPair(bidPrice, askPrice, cryptoPair);
+  private void createNewAggregatedPrice(BigDecimal bidPrice, BigDecimal askPrice, CryptoPair cryptoPair) {
+    aggregatedPriceService.createNewAggregatedPrice(bidPrice, askPrice, cryptoPair);
   }
 }

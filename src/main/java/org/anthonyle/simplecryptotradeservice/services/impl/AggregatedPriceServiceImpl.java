@@ -2,7 +2,6 @@ package org.anthonyle.simplecryptotradeservice.services.impl;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 import org.anthonyle.simplecryptotradeservice.enums.CryptoPair;
 import org.anthonyle.simplecryptotradeservice.models.AggregatedPrice;
@@ -23,17 +22,13 @@ public class AggregatedPriceServiceImpl implements AggregatedPriceService {
 
   @Override
   @Transactional
-  public void saveOrUpdateAggregatedPriceByCryptoPair(BigDecimal bidPrice, BigDecimal askPrice, CryptoPair cryptoPair) {
-    AggregatedPrice aggregatedPrice = aggregatedPriceRepo.findByCryptoPair(cryptoPair);
-
-    if (Objects.isNull(aggregatedPrice)) {
-      aggregatedPrice = new AggregatedPrice();
-      aggregatedPrice.setCryptoPair(cryptoPair);
-    }
-
-    aggregatedPrice.setBidPrice(bidPrice);
-    aggregatedPrice.setAskPrice(askPrice);
-    aggregatedPrice.setUpdatedTime(LocalDateTime.now());
-    aggregatedPriceRepo.save(aggregatedPrice);
+  public void createNewAggregatedPrice(BigDecimal bidPrice, BigDecimal askPrice, CryptoPair cryptoPair) {
+    AggregatedPrice newAggregatedPrice = new AggregatedPrice();
+    newAggregatedPrice.setBidPrice(bidPrice);
+    newAggregatedPrice.setAskPrice(askPrice);
+    newAggregatedPrice.setCreatedDateTime(LocalDateTime.now());
+    newAggregatedPrice.setCryptoPair(cryptoPair);
+    aggregatedPriceRepo.save(newAggregatedPrice);
   }
+
 }

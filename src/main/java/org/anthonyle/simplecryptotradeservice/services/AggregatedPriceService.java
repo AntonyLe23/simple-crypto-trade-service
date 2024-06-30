@@ -6,5 +6,5 @@ import org.anthonyle.simplecryptotradeservice.enums.CryptoPair;
 
 public interface AggregatedPriceService {
 
-  void saveOrUpdateAggregatedPriceByCryptoPair(BigDecimal bidPrice, BigDecimal askPrice, CryptoPair cryptoPair);
+  void createNewAggregatedPrice(BigDecimal bidPrice, BigDecimal askPrice, CryptoPair cryptoPair);
 }
