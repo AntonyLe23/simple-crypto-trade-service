@@ -35,7 +35,7 @@ public class AggregatedPriceServiceImpl implements AggregatedPriceService {
   }
 
   @Override
-  public List<BestPriceExchange> getLatestBestAggregatedPricesByCryptoPairs() {
+  public List<BestPriceExchange> getAllLatestBestAggregatedPricesByCryptoPairs() {
     return aggregatedPriceRepo.findAllLatestAggregatedPriceByCryptoPairs().stream()
         .map(aggregatedPrice -> {
           BestPriceExchange bestPriceExchange = new BestPriceExchange();
@@ -45,5 +45,10 @@ public class AggregatedPriceServiceImpl implements AggregatedPriceService {
           return bestPriceExchange;
         })
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public AggregatedPrice getLatestBestAggregatedPricesByCryptoPairs(CryptoPair cryptoPair) {
+    return aggregatedPriceRepo.findLatestAggregatedPriceByCryptoPairs(cryptoPair);
   }
 }

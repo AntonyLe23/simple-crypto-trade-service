@@ -8,4 +8,5 @@ import lombok.Data;
 public class ApiResponse<T> implements Serializable {
 
   private T data;
+  private String message;
 }
